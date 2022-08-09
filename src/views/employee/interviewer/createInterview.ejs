@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Create Interview</title>
+    </head>
+    <body>
+        <h1>Book an Interview</h1>
+        <form action="./<%= locals.applicationId %>" method="post">
+            <label>Date (e.g. 08/17/2022): </label><input id="date" type="date" name="date" oninput="validateInputs()">
+            <br>
+            <br>
+            <label>Start Time (e.g. 11:00 AM): </label><input id="startTime" type="time" name="startTime" oninput="validateInputs()">
+            <br>
+            <br>
+            <label>End Time (e.g. 11:30 PM): </label><input id="endTime" type="time" name="endTime" oninput="validateInputs()">
+            <br>
+            <br>
+            <label>Location: </label><input id="location" type="text" name="location" maxlength="80" oninput="validateInputs()">
+            <input id="submitBtn" name="submit" type="submit" value="Submit" disabled>
+        </form>
+    </body>
+</html>
+
+<script>
+    function validateInputs() {
+        const date = document.getElementById("date").value;
+        const startTime = document.getElementById("startTime").value;
+        const endTime = document.getElementById("endTime").value;
+        const location = document.getElementById("location").value;
+        const submitBtn = document.getElementById("submitBtn");
+
+        if (date && startTime && endTime) {
+            // Disabled means not enabled
+            submitBtn.disabled = !(startTime < endTime && location.length > 0);
+        } else {
+            submitBtn.disabled = true;
+        }
+    }
+</script>

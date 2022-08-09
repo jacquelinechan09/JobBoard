@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <%- include('../../ejs-components/header.ejs') %>
+    <div class="table-data">
+        <h2>Company Postings</h2>
+
+        <form action="/employee/hiringManager/deleteJobs" method="post">
+            <table border="1">
+                <tr>
+                    <th>ID</th>
+                    <th>Deadline</th>
+                    <th>Description</th>
+                    <th>Location</th>
+                    <th>Job Title</th>
+                    <th>Number of Applications</th>
+                    <th>Last Modified By</th>
+                    <th>Key Words</th>
+                    <th>Selected</th>
+                </tr>
+                
+                <% if(jobData.length!=0){
+                    jobData.forEach(function(data){ %>
+                        <tr>
+                            <td><%=data.id; %></td>
+                            <td><%=data.deadline.toLocaleString("en-US", { timeZone: 'America/Los_Angeles', year: "numeric", month: "2-digit", day: "2-digit"}) %></td>
+                            <td><%=data.description %></td>
+                            <td><%=data.location %></td>
+                            <td><%=data.jobtitle %></td>
+                            <td><%=data.appcount%></td>
+                            <td><%=data.lastmodifiedby%><br>at <%=data.lastmodifiedtime.toLocaleString() %></td>
+                            <td>
+                                <p><%= data.keywords %></p>
+                                <% if (locals.isHiringManager) { %>
+                                    <input type="text" id="keyword<%=data.id%>" name="keyword<%=data.id%>" maxlength="30" placeholder="add keyword">
+                                    <button type="submit" formaction="/employee/hiringManager/newkeyword" value="<%=data.id%>" name="jobid">Add</button>
+                                <% } %>
+                            </td>
+                            <td><input type="checkbox" id="selected" name="selected" value="<%=data.id%>"></td>
+                            <% if (locals.isHiringManager) { %>
+                                <td><button type="submit" formaction="/employee/hiringManager/modifyposting" value="<%=data.id%>" name="modifyId">Modify</button></td>
+                            <% } %>
+                            <td><button type="submit" formaction="/employee/viewApplications" value="<%=data.id%>" name="jobid">View Applications</button></td>
+                        </tr>
+                    <%}) %>
+                <% } else { %>
+                    <tr>
+                        <td colspan="7">No Data Found</td>
+                    </tr>
+                <% } %>
+            </table>
+            <% if (locals.isHiringManager) { %>
+            <input type="submit" value="Delete Selected" name="delete selected"><br>
+            <% } %>
+        </form>
+        
+    </div>
+    <br>
+    <% if (locals.isHiringManager) { %>
+        <form action="/employee/hiringManager/superManagers" method="post">
+            <label>Find all hiring managers who have modified all job postings for your company: </label>
+            <input type="submit" value="Submit">
+        </form>
+        <p><a href="/employee/hiringManager/home">Home</a></p>
+        <p><a href="/employee/hiringManager/addjobposting">Add Job</a></p>
+    <% } else { %>
+        <p><a href="/employee/interviewer/home">Home</a></p>
+    <% } %>
+</body>
+</html>

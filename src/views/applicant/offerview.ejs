@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <%- include('../../ejs-components/header.ejs') %>
+    <h2>Offers</h2>
+
+    <%
+    var i = 1
+    Data.forEach((data) => {
+    %>
+        <h3>Offer <%=i%></h3>
+        <p>Deadline: <%=data.deadline.toLocaleString("en-US", { timeZone: 'America/Los_Angeles', year: "numeric", month: "2-digit", day: "2-digit"})%></p>
+        <p><%=data.offername%></p>
+        <p><%=data.contents%></p>
+        <%if (data.isaccepted) {%>
+            <p style="color: green;">Offer Accepted</p>
+        <%} else {%>
+            <p style="color: red;">Offer Not Accepted</p>
+            <form action="./acceptoffer" method="post">
+                <button formaction="./acceptoffer" name="applicationid" value="<%=data.applicationid%>">Accept Offer</button>
+            </form>
+        <%}%>
+    <%
+        i = i + 1
+    })
+    %>
+   
+    <p><a href="/applicant/applicationview">Back</a></p>
+</body>
+</html>

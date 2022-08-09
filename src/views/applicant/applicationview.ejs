@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <%- include('../../ejs-components/header.ejs') %>
+    <h2>Current Applications</h2>
+    <% if (noData) { %>
+        <p>No application</p>
+    <% } else { %>
+        <div class="table-data">
+            <table border="1">
+                <tr>
+                    <th>Application ID</th>
+                    <td>Job ID</td>
+                    <th>Submission Time</th>
+                    <th>Position</th>
+                    <th>Status</th>
+                    <th>Interview Time</th>
+                    <th>Interview Location</th>
+                    <th>Offers</th>
+                </tr>
+                <%Data.forEach((data) => { %>
+                    <tr>
+                        <td><%=data.id%></td>
+                        <td><%=data.jobpostingid%></td>
+                        <td><%=data.submissiontime.toLocaleString("en-US", { timeZone: 'America/Los_Angeles', year: "numeric", month: "2-digit", day: "2-digit"})%></td>
+                        <td><%=data.jobtitle%></td>
+                        <td><%=data.status%></td>
+
+
+                        <%
+                        var interviewStartTime = undefined
+                        var interviewLocation = undefined
+                        interviewData.forEach((intdata) => {
+                            if (intdata.applicationid == data.id) {
+                                interviewStartTime = intdata.starttime.toLocaleString("en-US", { timeZone: 'America/Los_Angeles'})
+                                interviewLocation = intdata.location
+                            }
+                        }) %>
+                        <td><%=interviewStartTime%></td>
+                        <td><%=interviewLocation%></td>
+                        
+                        <%offerData.forEach((offdata) => {
+                            if (offdata.applicationid == data.id) { %>
+                                <td>
+                                    <form action="./viewoffer" method="post">
+                                        <button formaction="./viewoffer" name="applicationid" value="<%=data.id%>">View Offer</button>
+                                    </form>
+                                </td>
+                            <%}
+                        }) %>
+                    </tr>
+                <%})%>
+            </table>
+        </div>
+    <% }%>
+   
+    <p><a href="/applicant/dashboard">Home</a></p>
+</body>
+</html>

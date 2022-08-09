@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filtering Employee Attributes</title>
+</head>
+<body>
+    <h1>Filter employee attributes</h1>
+    <form action="/filterUserAttributes" method="post">
+        <label>Choose the attribute to filter for:</label><br> <br>
+            <input type="checkbox" id="name" name="selected" value="name">
+            <label for="name">Name</label><br>
+            <input type="checkbox" id="email" name="selected" value="email">
+            <label for="email">Email</label><br>
+            <input type="checkbox" id="phonenum" name="selected" value="phonenum">
+            <label for="phoneNum">Phone Number</label><br><br><br>
+        <input type="submit" value="Submit query to display results">
+    </form>
+    <% if (locals.result) { %>
+        <% if (locals.result.length > 0) { %>
+            <br>
+            <table border="color: black;">
+                <tr>
+                    <% Object.keys(locals.result[0]).forEach((keyname) => { %>
+                        <th><%=keyname%>
+                        </th>
+
+
+
+                    <% })%>
+
+
+                    <!-- <th>Email</th>
+                    <th>Name</th>
+                    <th>Phone Number</th> -->
+                </tr>
+            <% locals.result.forEach(data => { %>
+                <tr>
+                    <!-- <td><%= data.email %></td>
+                    <td><%= data.name %></td>
+                    <td><%= data.phonenum %></td> -->
+
+                    <%Object.keys(data).forEach((x) => { %>
+                        <td><%=data[x]%></td>
+                    <%})%>
+
+                </tr>
+            <% }) %>
+            </table>
+        <% } else { %>
+            <p>No results found.</p>
+        <% } %>
+    <% } %>
+</body>

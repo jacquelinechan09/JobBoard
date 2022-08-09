@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <%- include('../../ejs-components/header.ejs') %>
+    <div style="margin: 20px;">
+        <h2>Job Postings</h2>
+        <h3>Search job postings by company name:</h3>
+        <form action="/applicant/view" method="post">
+            <input type="text" name="companyName">
+            <input type="submit" value="Submit">
+        </form>
+        <br>
+        <% if (locals.jobData.length !== 0) { %>
+        <table border="1">
+            <tr>
+                <th>Job Title</th>
+                <th>Deadline</th>
+                <th>Company</th>
+                <th>Keywords</th>
+                <% if (locals.cookies.userType === 'Applicant') { %>
+                <th>Application Link</th>
+                <% } %>
+            </tr>
+            <% locals.jobData.forEach(function(data) { %>
+            <tr>
+                <td><%= data.jobtitle %></td>
+                <td><%= data.deadline.toLocaleString() %></td>
+                <td><a href="/aboutCompany/<%= data.companyname %>"><%= data.companyname %></a></td>
+                <td><%= data.keywords %></td>
+                <% if (locals.cookies.userType === 'Applicant') { %>
+                <td><a href="/apply/<%= data.id %>">Apply</a></td>
+                <% } %>
+            </tr>
+            <% }) %>
+        </table>
+        <% } else { %>
+        <p>No jobs found :(</p>
+        <% } %>
+        <% if (locals.cookies.userType === 'Applicant') { %>
+        <p><a href="/applicant/dashboard">Home</a></p>
+        <% } %>
+    </div>
+</body>
+</html>

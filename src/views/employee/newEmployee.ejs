@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Employee Sign Up Page</h1>
+    <form action="/employee/new" method="post">
+        <label for="jobtitle">Job Title:</label><br>
+        <input id="jobtitle" type="text" name="jobtitle" maxlength="80"><br><br>
+
+        <label for="name">Name:</label><br>
+        <input id="name" type="text" name="name" maxlength="80"><br><br>
+
+        <label for="email">Email:</label><br>
+        <input id="email" type="email" name="email" maxlength="80"><br><br>
+
+        <label for="password">Password:</label><br>
+        <input id="password" type="password" name="password" maxlength="80"><br><br>
+
+        <label for="phonenum">Phone Number:</label><br>
+        <input id="phonenum" type="tel" name="phonenum" maxlength="20"><br><br>
+
+        <label for="companyname">Company Name:</label><br>
+        <input id="companyname" type="text" name="companyname" maxlength="80"><br><br>
+
+        <p>Type of Employee (select one or more):</p>
+        <input id="hiringManagerBox" type="checkbox" name="hiringManager" onclick="checkEmployeeType()"><label>Hiring Manager</label>
+        <br>
+        <input id="interviewerBox" type="checkbox" name="interviewer" onclick="checkEmployeeType()"><label>Interviewer</label>
+        <br><br>
+        <input id="submitButton" type="submit" value="OK" disabled><br><br>
+    </form>
+    <% if (locals.emailExists) { %>
+    <p style="color: red">Error: an employee with that email already exists.</p>
+    <% } %>
+    <p><a href="/employee">Go back to log in</a></p>
+</body>
+</html>
+<script>
+    function checkEmployeeType() {
+        const hiringManagerBox = document.getElementById("hiringManagerBox");
+        const interviewerBox = document.getElementById("interviewerBox");
+        const submitButton = document.getElementById("submitButton");
+        submitButton.disabled = (!hiringManagerBox.checked && !interviewerBox.checked);
+    }
+</script>

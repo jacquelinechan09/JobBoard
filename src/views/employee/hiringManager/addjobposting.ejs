@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Job Creation Page</h1>
+    <form action="./addjobposting" method="post">
+        <label for="jobtitle">Job Title:</label><br>
+        <input id="jobtitle" type="text" name="jobtitle" maxlength="80"><br><br>
+
+        <label for="location">Location:</label><br>
+        <input id="location" type="text" name="location" maxlength="80"><br><br>
+
+        <label for="description">Description:</label><br>
+        <textarea id="description" type="text" name="description" maxlength="4000" style="width: 500px;"></textarea><br><br>
+
+        <label for="deadline">Deadline:</label><br>
+        <input id="deadline" type="date" name="deadline">
+
+        <input type="submit" value="OK"><br><br>
+    </form>
+    <a href="/employee/hiringManager/home">Home</a>
+</body>
+</html>

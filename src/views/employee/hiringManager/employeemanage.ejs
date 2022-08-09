@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <%- include('../../../ejs-components/header.ejs') %>
+    <h2>Employee Dashboard For <%= locals.companyName %></h2>
+
+    <% if (locals.companyRatingData.avg_rating != null) { %>
+        <div class="table-data">
+            <table border="1">
+                <tr>
+                    <th>Title</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Number of Applications Rated</th>
+                    <th>Average Rating Given</th>
+                    <th>Rating Weight</th>
+                </tr>
+                
+                <% if(locals.employeeData.length !== 0){
+                    locals.employeeData.forEach(function(data){ %>
+                        <tr>
+                            <td><%= data.jobtitle%></td>
+                            <td><%= data.name%></td>
+                            <td><%= data.email %></td>
+                            <td><%= data.num_ratings %></td>
+                            <td><%= parseFloat(data.avg_rating).toFixed(3) %></td>
+                            <td><%= parseFloat(data.ratingweight) %></td>
+                        </tr>
+                    <%}) %>
+                <% } else { %>
+                    <tr>
+                        <td colspan="7">No Data Found</td>
+                    </tr>
+                <% } %>
+            </table>
+        </div>
+        <p><a href="/employee/hiringManager/editRatingWeights">Edit rating weights</a></p>
+        <h2>Company Rating Statistics</h2>
+        <p>Average rating given: <%= parseFloat(locals.companyRatingData.avg_rating).toFixed(3) %></p>
+        <p>Average number of ratings given per employee: <%= parseFloat(locals.companyRatingData.avg_num_ratings).toFixed(3) %></p>
+        <p>Total number of ratings given: <%= locals.companyRatingData.total_ratings %></p>
+
+    <% } else { %>
+        <p>Rate at least 1 application to access this page</p>
+    <% } %>
+
+    <a href="/employee/hiringManager/home">Home</a>
+
+</body>
+
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <%- include('../../ejs-components/header.ejs') %>
+    <h3>Job Posting Info</h3>
+    <p>Job Title: <%=Data.jobtitle%></p>
+    <p>Job Description: <%=Data.description%></p>
+    <p>Job Location: <%=Data.joblocation%></p>
+    <h3>Applicant Contact Info</h3>
+    <p>Applicant Name: <%= Data.name %></p>
+    <p>Applicant Email: <%= Data.applicantemail %></p>
+    <p>Applicant Location: <%= Data.applicantlocation %></p>
+    <h3>Application Info</h3>
+    <p>Applicantion Submission Time: <%= Data.submissiontime.toLocaleString("en-US", { timeZone: 'America/Los_Angeles', year: "numeric", month: "2-digit", day: "2-digit"}) %></p>
+    <p>Application Status: <%=Data.status%></p>
+    <h3>Sections</h3>
+    <% for (let i = 0; i < fileData.length; i++) { %>
+        <div style="border: 1px; border-style: dotted;">
+            <p><b><%=fileData[i].title%></b></p>
+            <p><%=fileData[i].content%></p>
+        </div><br>
+    <%}%>
+    
+    <h3>Application Rating</h3>
+    <p>Current Rating: <%=Rating%></p>
+    <%if (!hasRated) { %>
+        <p style="color: red;">You have not rated</p>
+    <%} else {%> 
+        <p>Your rating is: <%=specificRating%></p>
+    <%}%>
+
+    <form action="./hiringManager/updaterating" method="post">
+        <label for="rating">Rating</label><br>
+        <input type="number" id="rating" name="rating" placeholder="Your Rating Here" step="1" min="1" max="5"><br>
+        <button type="submit" value="<%=Data.id%>" name="applicationid">Rate</button>
+    </form>
+
+    <% if (locals.isInterviewer) { %>
+        <p><a href="./interviewer/createInterview/<%= Data.id %>">Schedule an interview</a></p>
+        <p><a href="./interviewer/viewInterviews/<%= Data.id %>">See your interviews for this application</a></p>
+    <% } %>
+
+    <% if (locals.isHiringManager) { %>
+        <p><a href="./hiringManager/viewAllInterviews/<%= Data.id %>">See ALL interviews for this application</a></p>
+        <h2>Offer Dashboard</h2>
+        <% offerData.forEach((data) => { %>
+            <details>
+                <summary><%=data.offername%></summary>
+                <p>Accepted: <%=data.isaccepted%></p>
+                <p>Extended By: <%=data.hiringmanageremail%></p>
+                <p>Deadline: <%=data.deadline.toLocaleString("en-US", { timeZone: 'America/Los_Angeles', year: "numeric", month: "2-digit", day: "2-digit"}) %></p>
+                <p>Content: <%=data.contents%></p>
+            </details>
+        <%})%>
+
+        <br>
+        <details>
+            <summary>Create New Offer</summary>
+            <br>
+            <form action="./hiringManager/newoffer" method="post">
+                <label for="title">Offer Title</label><br>
+                <input type="text" id="title" name="title" placeholder="offer title"><br>
+
+                <label for="content">Offer Detail</label><br>
+                <input type="text" id="content" name="content" placeholder="offer details"><br>
+                
+                <label for="deadline">Deadline:</label><br>
+                <input id="year" type="text" name="year" placeholder="year">
+                <input id="month" type="text" name="month" placeholder="month">
+                <input id="date" type="text" name="date" placeholder="date"> <br>
+
+                <button type="submit" value="<%=Data.id%>" name="applicationid">Create Offer</button>
+            </form>
+        </details>
+        <br><br>
+        <form action="./viewApplication" method="post">
+            <button type="submit" formaction="./viewApplications" value="<%=Data.jobpostingid%>" name="jobid">Go Back</button>
+        </form>
+    <% } %>
+</body>
+
+</html>

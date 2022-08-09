@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Application for: <%= locals.jobData.jobtitle %> at <%= locals.jobData.companyname %></h1>
+    <h3>Deadline: <%= locals.jobData.deadline.toLocaleString() %></h3>
+    <p><b>Job location:</b> <%= locals.jobData.location %></p>
+    <p><b>Job description:</b> <%= locals.jobData.description %></p>
+    <p><b>Application Instructions:</b></p>
+    <ul>
+        <li>Your application is comprised of sections, each of which has a title and some associated content. Some examples of titles are "Resume" and "Cover Letter".</li>
+        <li>Make each section title unique. Sections with blank titles are discarded.</li>
+        <li>Click the Submit button at the bottom of the page when you wish to submit.</li>
+        <ul>
+            <li>Problems to be fixed before submission are shown in red.</li>
+        </ul>
+    </ul>
+    <p>To add another section, click the "Add Section" button below.</p>
+    <button id="addSection" onclick="addSection()">Add Section</button>
+    <form id="applicationForm" action="/apply/<%= locals.jobId %>" method="post">
+        <div id="sections"></div>
+        <div id="submissionProblems"></div>
+        <br>
+        <input id="submitButton" type="submit" value="Submit" disabled>
+    </form>
+    <p><a href="/applicant/view">Exit without submitting</a></p>
+</body>
+</html>
+
+<script>
+    let sectionNum = 0;
+
+    function makeNewSection(number) {
+        const result = document.createElement("div");
+        result.setAttribute("id", `section${sectionNum}`);
+        result.innerHTML = `<h3>Section ${sectionNum}</h3>`
+            + `<label>Title: </label>`
+            + `<input id="title${number}" type="text" name="title${number}" maxlength="80" onkeyup=validateSectionTitles()>`
+            + `<br><br>`
+            + `<label>Content: </label>`
+            + `<textarea id="content${number}" type="text" name="content${number}"></textarea>`;
+        return result;
+    };
+
+    function addSection() {
+        sectionNum += 1;
+        let sectionsNode = document.getElementById("sections");
+        sectionsNode.appendChild(makeNewSection(sectionNum));
+    };
+
+    function validateSectionTitles() {
+        const submitButton = document.getElementById("submitButton");
+        const sectionTitlesMap = new Object();
+        let warnings = "";
+
+        for (i = 1; i <= sectionNum; i++) {
+            const title = document.getElementById(`title${i}`).value;
+            if (sectionTitlesMap[title] !== undefined) {
+                warnings += `<p style="color:red">Sections ${sectionTitlesMap[title]} and ${i} have the same title.</p>`
+            } else if (title !== "") {
+                sectionTitlesMap[title] = i;
+            }
+        }
+
+        if (Object.keys(sectionTitlesMap).length === 0) {
+            warnings += `<p style="color:red">There must be a section with a non-blank title.</p>`
+        }
+
+        document.getElementById("submissionProblems").innerHTML = warnings;
+        submitButton.disabled = (warnings.length !== 0);
+    };
+
+    addSection();
+    validateSectionTitles();
+</script>

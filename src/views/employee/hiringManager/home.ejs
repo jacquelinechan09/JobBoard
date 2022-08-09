@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <%- include('../../../ejs-components/header.ejs') %>
+    <h1>Hiring Manager Home Page</h1>
+    <h2>Some information About this user</h2>
+    <p>
+        <li>Email: <%= personalData[0].email%></li>
+        <li>Name: <%= personalData[0].name%></li>
+        <li>Phone Number: <%= personalData[0].phonenum%></li>
+        <li>Company Name: <%= personalData[0].companyname%></li>
+        <li>Job Title: <%= personalData[0].jobtitle%></li>
+    </p>
+    <p><a href="/applicant/view">View All Job Postings</a></p>
+    <p><a href="/employee/companyView">View Company Postings</a></p>
+    <p><a href="/employee/hiringManager/employeeview">View Company Employees</a></p>
+    <form action="/employee/hiringManager/aboveAvgRaters" method="post">
+        <label>See employees whose average rating is above the company average: </label><input type="submit">
+    </form>
+    <br>
+    <form action="/employee/hiringManager/avgRatingCompare" method="post">
+        <label>See employees with average rating above: </label><input name="number" type="number" step="0.1" min="0" max="5">
+        <br>
+        <input type="submit">
+    </form>
+    <p><a href="/employee/hiringManager/editAboutUs">Edit "About Us" page</a></p>
+</body>
+</html>

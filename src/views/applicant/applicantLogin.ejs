@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .loginpage {
+            text-align: center;
+        }
+
+        h1 {
+            color: #e27d60;
+            font-size: 50px;
+            padding: 20px 5px;
+        }
+
+        label {
+            padding-top: 3px;
+            padding-bottom: 15px;
+        }
+
+        input {
+            padding-top: 3px;
+            padding-bottom: 3px;
+            margin-bottom: 30px;
+        }
+
+    </style>
+</head>
+<body>
+    <%- include('../../ejs-components/header.ejs') %>
+    
+    <div class="loginpage">
+        <h1>Applicant Login Page</h1>
+
+        <form action="/applicant" method="post">
+            <label for="email">Email:</label>
+            <br>
+            <input id="email" type="text" name="email">
+            <br>
+            <label for="password">Password:</label>
+            <br>
+            <input id="password" type="password" name="password">
+            <br>
+            <input type="submit" value="Log In">
+            <br>
+        </form>
+        
+        
+        <% if (locals.loginFailed) { %>
+            <p style="color:red">Incorrect email or password.</p>
+        <% } %>
+        <a href="/applicant/new">Sign up</a>
+    </div>
+
+</body>
+</html>

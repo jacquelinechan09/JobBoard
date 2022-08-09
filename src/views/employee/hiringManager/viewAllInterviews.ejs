@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>View All Interviews</title>
+    </head>
+    <body>
+        <%- include('../../../ejs-components/header.ejs') %>
+        <div style="margin: 20px;">
+        <% if (locals.interviewData.length > 0) { %>
+            <h3>All interviews for application with ID <%= locals.applicationId %>:</h3>
+            <% locals.interviewData.forEach(interview => { %>
+                <div style="border: 1px; border-style: dashed">
+                    <p><b>Interview ID:</b> <%= interview.id %></p>
+                    <p><b>Interviewer email:</b> <%= interview.intervieweremail %></p>
+                    <p><b>Start time:</b> <%= interview.starttime.toLocaleString() %></p>
+                    <p><b>End time:</b> <%= interview.endtime.toLocaleString() %></p>
+                    <p><b>Location:</b> <%= interview.location %></p>
+                    <p><b>Interview notes:</b> <%= interview.interviewnotes %></p>
+                </div>
+            <% }) %>
+        <% } else { %>
+            <p>No interviews have been conducted for this job application!</p>
+        <% } %>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0px;
+            background-color: #cce6e3;
+        }
+
+        .main-header {
+            padding: 10px 5px 20px 5px;
+            color: white;
+            background-color: #41b3a3;
+        }
+        .nav-button {
+            padding: 8px 5px;
+            border-style: solid;
+            border-width: 2px;
+            border-color: #cce6e3;
+            color: #cce6e3;
+            text-decoration: none;
+        }
+        .nav-button:hover {
+            background-color: #cce6e3;
+            color: #41b3a3;
+        }
+
+        .logout {
+            float: right;
+            background: none;
+            color: #e8762b;
+            border: solid;
+            font-size: medium;
+            font-weight: 500;
+            border-width: 4px;
+            padding: 8px 20px;
+            border-color: #e8762b;
+        }
+
+        .logout:hover {
+            background-color: #e8762b;
+            color: #41b3a3;
+        }
+
+        .formbar {
+            padding: 8px 5px;
+        }
+        
+    </style>
+</head>
+
+<body>
+    <div class="main-header">
+        <% if (locals.cookies.userEmail) { %>
+            <form action="/logout" method="post" class="formbar">
+                Currently logged in as: <%= locals.cookies.userEmail %> (<%= locals.cookies.userType %>)
+                <input id="logoutBtn" type="submit" value="Log Out" class="logout">
+            </form>
+            <br>
+        <% } %>
+        <% if (locals.cookies.userType == 'Applicant') { %>
+            <a href="/applicant/dashboard" class="nav-button">Dashboard</a>
+            <a href="/applicant/applicationview" class="nav-button">View Current Applications</a>
+            <a href="/applicant/view" class="nav-button">Search for jobs</a>
+        <%} else if (locals.cookies.userType == 'Hiring Manager' || locals.cookies.userType == 'Hiring Manager and Interviewer') {%>
+            <a href="/employee/hiringManager/home" class="nav-button">Home</a>
+        <%} else if (locals.cookies.userType == 'Interviewer') {%>
+            <a href="/employee/interviewer/home" class="nav-button">Home</a>
+        <%} else {%>
+            <a href="/" class="nav-button">Home</a>
+        <%}%>
+    </div>
+</body>
+

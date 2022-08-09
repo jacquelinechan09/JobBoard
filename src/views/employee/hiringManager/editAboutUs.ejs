@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>About Us</title>
+    </head>
+    <body>
+        <%- include('../../../ejs-components/header.ejs') %>
+        <div style="margin: 20px;">
+            <p>Tell people about <%= locals.companyName %>. (Maximum 4000 characters.)</p>
+            <form action="/employee/hiringManager/editAboutUs" method="post">
+                <textarea maxlength="4000" name="aboutUs" style="width: 500px;"><%= locals.aboutUs %></textarea>
+                <br>
+                <br>
+                <input type="submit" value="Save Changes">
+            </form>
+            <p><a href="/employee/hiringManager/home">Home</a></p>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>View Interviews</title>
+    </head>
+    <body>
+        <%- include('../../../ejs-components/header.ejs') %>
+        <div style="margin: 20px;">
+        <% if (locals.interviewData.length > 0) { %>
+            <h3>Interviews for Application with ID <%= locals.applicationId %>:</h3>
+            <% locals.interviewData.forEach(interview => { %>
+                <div style="border: 1px; border-style: dashed">
+                    <p><b>Interview ID:</b> <%= interview.id %></p>
+                    <p><b>Start time:</b> <%= interview.starttime.toLocaleString() %></p>
+                    <p><b>End time:</b> <%= interview.endtime.toLocaleString() %></p>
+                    <p><b>Location:</b> <%= interview.location %></p>
+                    <p><b>Interview notes:</b></p>
+                    <form action="/employee/interviewer/updateInterviewNotes/<%= interview.id %>" method="post">
+                        <textarea name="notes" style="width: 500px; height: 50px;" maxlength="500"><%= interview.interviewnotes %></textarea>
+                        <br>
+                        <br>
+                        <input type="submit" value="Update">
+                    </form>
+                </div>
+            <% }) %>
+        <% } else { %>
+            <p>You have not conducted any interviews for this job application!</p>
+        <% } %>
+        </div>
+    </body>
+</html>
+

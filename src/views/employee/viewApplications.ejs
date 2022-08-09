@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <%- include('../../ejs-components/header.ejs') %>
+    <div class="table-data">
+        <h2>Applications to Job ID <%= jobID %></h2>
+
+        <table border="1">
+            <tr>
+                <th>Application ID</th>
+                <th>Submission Time</th>
+                <th>Status</th>
+                <th>Applicant Email</th>
+            </tr>
+            
+            <% if(applicationData.length!=0){
+                applicationData.forEach(function(data){ %>
+                    <tr>
+                        <td><%=data.id; %></td>
+                        <td><%=data.submissiontime.toLocaleString("en-US", { timeZone: 'America/Los_Angeles', year: "numeric", month: "2-digit", day: "2-digit"}) %></td>
+                        <td><%=data.status %></td>
+                        <td><%=data.applicantemail %></td>
+                        <td>
+                            <form action="./viewApplication" method="post"><button type="submit" formaction="./viewApplication" value="<%=data.id%>" name="applicationid">View Details</button></form>
+                        </td>
+                    </tr>
+                <%}) %>
+            <% } else { %>
+                <tr>
+                    <td colspan="7">No Data Found</td>
+                </tr>
+            <% } %>
+        </table>
+
+    </div>
+    <p><a href="/employee/companyView">Go Back</a></p>
+    <% if (locals.isHiringManager) { %>
+        <p><a href="/employee/hiringManager/home">Home</a></p>
+    <% } else { %>
+        <p><a href="/employee/interviewer/home">Home</a></p>
+    <% } %>
+</body>
+
+</html>

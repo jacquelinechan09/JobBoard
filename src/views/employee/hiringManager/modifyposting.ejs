@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Job Modification Page</h1>
+
+    <form action="./modifypostingmain" method="post">
+        <label for="jobtitle">Job Title:</label><br>
+        <input id="jobtitle" type="text" name="jobtitle" value="<%=jobData.jobtitle%>"><br>
+        <button type="submit" value="<%=jobData.id%> jobtitle" name="modifyId">Change</button><br><br>
+
+        <label for="location">Location:</label><br>
+        <input id="location" type="text" name="location" value="<%=jobData.location%>"><br>
+        <button type="submit" value="<%=jobData.id%> location" name="modifyId">Change</button><br><br>
+
+        <label for="description">Description:</label><br>
+        <textarea id="description" type="text" name="description" maxlength="4000" style="width: 500px;"><%=jobData.description%></textarea><br>
+        <button type="submit" value="<%=jobData.id%> description" name="modifyId">Change</button><br><br>
+
+        <label for="deadline">Deadline:</label><br>
+        <input id="deadline" type="date" name="deadline" value="<%=jobData.deadline%>"><br>
+        <button type="submit" value="<%=jobData.id%> deadline" name="modifyId">Change</button><br><br>
+
+        <button type="submit" value="<%=jobData.id%> all" name="modifyId">Save and Submit</button><br><br>
+    </form>
+    <a href="/employee/companyView">Home</a>
+</body>
+</html>

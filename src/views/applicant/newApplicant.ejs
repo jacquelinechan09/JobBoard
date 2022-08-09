@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Applicant Sign Up Page</h1>
+    <form action="/applicant/new" method="post">
+        <label for="name">Name:</label><br>
+        <input id="name" type="text" name="name" maxlength="80"><br>
+        <label for="email">Email:</label><br>
+        <input id="email" type="email" name="email" maxlength="80"><br>
+        <label for="location">Location:</label><br>
+        <input id="location" type="text" name="location" maxlength="80"><br>
+        <label for="password">Password:</label><br>
+        <input id="password" type="password" name="password" maxlength="80"><br>
+        <input type="submit" value="OK"><br>
+    </form>
+    <% if (locals.emailExists) { %>
+    <p style="color: red">Error: an applicant with that email exists already.</p>
+    <% } %>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>About <%= locals.companyName %></title>
+    </head>
+    <body>
+        <%- include('../ejs-components/header.ejs') %>
+        <div style="margin: 20px;">
+            <% if (locals.aboutUs != null) { %>
+                <p><b>About <%= locals.companyName %>:</b></p>
+                <p><%= locals.aboutUs %></p>
+            <% } else { %>
+                <p>No company was found with name <%= locals.companyName %>.</p>
+            <% } %>
+            <a href="/applicant/view">Back to job postings page</a>
+        </div>
+    </body>
+</html>

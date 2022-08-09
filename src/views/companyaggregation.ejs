@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <%- include('../ejs-components/header.ejs') %>
+    <div class="table-data">
+        <table border="1">
+            <tr>
+                <th>Company Name</th>
+                <th>Average Score per Company</th>
+                <th>Average Number of Rating Per Employee</th>
+                <th>Total Ratings Given</th>
+            </tr>
+            <%if (Data.length != 0) {
+                Data.forEach((data) => { %>
+                    <tr>
+                        <td><%=data.companyname%></td>
+                        <td><%=Number(data.company_avg_rating_score)%></td>
+                        <td><%=Number(data.company_avg_rating)%></td>
+                        <td><%=Number(data.company_total_rating)%></td>
+                    </tr>
+            <%})}%>
+        </table>
+    </div>
+    <a href="/">Home</a>
+
+</body>
+
+</html>

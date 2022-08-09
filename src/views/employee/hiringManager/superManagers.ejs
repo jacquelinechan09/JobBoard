@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Super Managers</title>
+    </head>
+    <body>
+        <%- include('../../../ejs-components/header.ejs') %>
+        <p>Hiring managers who have modified every job posting at <%= locals.companyName %>:</p>
+        <table border="1px">
+            <tr>
+                <th>Email</th>
+                <th>Name</th>
+            </tr>
+            <% locals.superManagers.forEach(function(manager) { %>
+            <tr>
+                <td><%= manager.email %></td>
+                <td><%= manager.name %></td>
+            </tr>
+            <% }) %>
+        </table>
+        <p><a href="/employee/companyView">Go back</a></p>
+    </body>
+</html>

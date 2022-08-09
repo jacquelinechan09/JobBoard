@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Edit Rating Weights</title>
+    </head>
+    <body>
+        <%- include('../../../ejs-components/header.ejs') %>
+        <div style="margin: 20px;">
+            <table border="1px;">
+                <tr>
+                    <th>Job Title</th>
+                    <th>Rating Weight</th>
+                </tr>
+                <% if (locals.ratingWeightData) { %>
+                    <% locals.ratingWeightData.forEach(data => { %>
+                        <tr>
+                            <td><%= data.jobtitle %></td>
+                            <td>
+                                <form action="/employee/hiringManager/editRatingWeights" method="post">
+                                    <input type="number" min="0" step="0.1" value="<%= parseFloat(data.ratingweight) %>" name="number">
+                                    <button type="submit" value="<%= data.jobtitle %>" name="jobTitle">Change</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <% }) %>
+                <% } %>
+            </table>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Lookup</title>
+</head>
+<body>
+    <%- include('../../ejs-components/header.ejs') %>
+    <h1>Search for applicants or employees</h1>
+    <form action="/userLookup" method="post">
+        <label>Choose the user type:</label>
+        <select id="table" name="table" oninput="determineAttributes()">
+            <option value="Applicant">Applicant</option>
+            <option value="Employee">Employee</option>
+        </select>
+        <br>
+        <br>
+        <label>Choose the attribute:</label>
+        <select id="attribute" name="attribute">
+            <option value="email"><label>Email</label></option>
+            <option value="name"><label>Name</label></option>
+            <option value="location"><label>Location</label></option>
+        </select>
+        <br>
+        <br>
+        <label>Type the attribute's value:</label>
+        <input name="attributeValue" type="text">
+        <br>
+        <br>
+        <input type="submit" value="Submit Query">
+    </form>
+    <% if (locals.result) { %>
+        <% if (locals.result.length > 0) { %>
+            <br>
+            <table border="color: black;">
+                <tr>
+                    <th>Email</th>
+                    <th>Name</th>
+                </tr>
+            <% locals.result.forEach(data => { %>
+                <tr>
+                    <td><%= data.email %></td>
+                    <td><%= data.name %></td>
+                </tr>
+            <% }) %>
+            </table>
+        <% } else { %>
+            <p>No results found.</p>
+        <% } %>
+    <% } %>
+</body>
+<script>
+    function determineAttributes() {
+        const table = document.getElementById("table").value;
+        const attributeSelect = document.getElementById("attribute");
+        if (table === "Applicant") {
+            attributeSelect.innerHTML = '<option value="email"><label>Email</label></option>'
+                + '<option value="name"><label>Name</label></option>'
+                + '<option value="location"><label>Location</label></option>';
+        } else {
+            attributeSelect.innerHTML = '<option value="email"><label>Email</label></option>'
+                + '<option value="name"><label>Name</label></option>'
+                + '<option value="companyName"><label>Company Name</label></option>';
+        }
+    }
+</script>
