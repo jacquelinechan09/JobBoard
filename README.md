@@ -1,5 +1,7 @@
 ## Apply to your dream job - a job-posting platform allowing hiring managers to create/modify postings
 
+![image](https://user-images.githubusercontent.com/109058047/189255925-7a8a80b3-736f-4289-9c85-995c94944261.png)
+
 This is a term project (CPSC 304, Relational Databases with SQL) where we have two main types of users: applicants and employees. The employee is further split into
 hiring managers and interviewers. Below are some functionalities implemented in our project:
 
